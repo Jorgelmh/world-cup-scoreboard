@@ -46,8 +46,30 @@ export class Scoreboard {
     return match.pop()
   }
 
+  /**
+   * Updates the scores of an existing match based on the provided team properties.
+   * If the new score is less than the current score for any of the teams then the match isn't updated.
+   *
+   * @param homeTeam - The updated properties of the home team, including its name and score.
+   * @param awayTeam - The updated properties of the away team, including its name and score.
+   * @returns The updated match object, or null if the match is not found.
+   */
   public updateMatch(homeTeam: TeamProps, awayTeam: TeamProps) : Match | null {
-    return null
+    const index = this.matches.findIndex((val) => val.homeTeam.name === homeTeam.name
+      && val.homeTeam.score <= homeTeam.score && val.awayTeam.name === awayTeam.name && val.awayTeam.score <= awayTeam.score)
+
+    if (index < 0) {
+      return null
+    }
+
+    /* Update match data with new scores */
+    const updatedMatch : Match = {
+      ...this.matches[index],
+      homeTeam,
+      awayTeam,
+    }
+    this.matches.splice(index, 1, updatedMatch)
+    return updatedMatch
   }
 
   public getMatches() : Match[] {

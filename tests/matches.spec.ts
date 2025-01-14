@@ -33,4 +33,19 @@ describe('Scoreboard implementation', () => {
 
     expect(scoreboard.getMatches().length).toBe(0)
   })
+
+  it('Should update an existing match', () => {
+    const scoreboard = new Scoreboard()
+    const match = scoreboard.addMatch('Portugal', 'Spain')
+    expect(match).toBeDefined()
+
+    const newMatch = scoreboard.updateMatch({ name: 'Portugal', score: 1 }, { name: 'Spain', score: 2 })
+    expect(newMatch).toBeDefined()
+    expect(newMatch?.homeTeam.score).toBe(1)
+    expect(newMatch?.awayTeam.score).toBe(2)
+
+    const failedUpdate = scoreboard.updateMatch({ name: 'Portugal', score: 0 }, { name: 'Spain', score: 3 })
+    /* Decreasing the goals for Portugal should trigger no change in the memory store as this is not allowed */
+    expect(failedUpdate).toBeNull()
+  })
 })
