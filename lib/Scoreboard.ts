@@ -72,7 +72,21 @@ export class Scoreboard {
     return updatedMatch
   }
 
+  /**
+   * Retrieves a summary of matches in progress, ordered by total score in descending order.
+   * Matches with the same total score are ordered by the most recently started match.
+   * @returns An array of matches sorted by total score and creation time.
+   */
   public getMatches() : Match[] {
-    return this.matches
+    return this.matches.sort((a, b) => {
+      const aScore = a.homeTeam.score + a.awayTeam.score
+      const bScore = b.homeTeam.score + b.awayTeam.score
+
+      if (aScore !== bScore) {
+        return bScore - aScore
+      }
+
+      return b.createdAt - a.createdAt
+    })
   }
 }

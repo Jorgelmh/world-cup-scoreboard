@@ -48,4 +48,80 @@ describe('Scoreboard implementation', () => {
     /* Decreasing the goals for Portugal should trigger no change in the memory store as this is not allowed */
     expect(failedUpdate).toBeNull()
   })
+
+  it('Should return matches ordered by scores', () => {
+    const scoreboard = new Scoreboard()
+    /* Mexico 0 - Canado 5 */
+    scoreboard.addMatch('Mexico', 'Canada')
+    scoreboard.updateMatch({ name: 'Mexico', score: 0 }, { name: 'Canada', score: 5 })
+    /* Spain 10 - Brazil 2 */
+    scoreboard.addMatch('Spain', 'Brazil')
+    scoreboard.updateMatch({ name: 'Spain', score: 10 }, { name: 'Brazil', score: 2 })
+    /* Germany 2 - France 2 */
+    scoreboard.addMatch('Germany', 'France')
+    scoreboard.updateMatch({ name: 'Germany', score: 2 }, { name: 'France', score: 2 })
+    /* Uruguay 6 - Italy 6 */
+    scoreboard.addMatch('Uruguay', 'Italy')
+    scoreboard.updateMatch({ name: 'Uruguay', score: 6 }, { name: 'Italy', score: 6 })
+    /* Argentina 3 - Australia 1 */
+    scoreboard.addMatch('Argentina', 'Australia')
+    scoreboard.updateMatch({ name: 'Argentina', score: 3 }, { name: 'Australia', score: 1 })
+
+    const matches = scoreboard.getMatches()
+    expect(matches.length).toBe(5)
+
+    const compareMatches = matches.map(({ homeTeam, awayTeam }) => ({ homeTeam, awayTeam }))
+    expect(compareMatches).toEqual([
+      {
+        homeTeam: {
+          name: 'Uruguay',
+          score: 6,
+        },
+        awayTeam: {
+          name: 'Italy',
+          score: 6,
+        },
+      },
+      {
+        homeTeam: {
+          name: 'Spain',
+          score: 10,
+        },
+        awayTeam: {
+          name: 'Brazil',
+          score: 2,
+        },
+      },
+      {
+        homeTeam: {
+          name: 'Mexico',
+          score: 0,
+        },
+        awayTeam: {
+          name: 'Canada',
+          score: 5,
+        },
+      },
+      {
+        homeTeam: {
+          name: 'Argentina',
+          score: 3,
+        },
+        awayTeam: {
+          name: 'Australia',
+          score: 1,
+        },
+      },
+      {
+        homeTeam: {
+          name: 'Germany',
+          score: 2,
+        },
+        awayTeam: {
+          name: 'France',
+          score: 2,
+        },
+      },
+    ])
+  })
 })
