@@ -1,0 +1,61 @@
+{
+  "extends": ["airbnb", "airbnb-typescript"],
+  "ignorePatterns": ["gesture-handler.native.ts", "babel.config.js", "gesture-handler.ts"],
+  "rules": {
+    "semi": [
+      "error",
+      "never"
+    ],
+    "@typescript-eslint/semi": ["error", "never"],
+    "camelcase": "off",
+    "quotes": [2, "single", "avoid-escape"],
+    "react/jsx-one-expression-per-line": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "linebreak-style": "off",
+    "import/prefer-default-export": "off",
+    "react/prop-types": "off",
+    "max-len": ["error", { "code": 200 }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": [
+          "Link"
+        ],
+        "aspects": [
+          "invalidHref"
+        ]
+      }
+    ]
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.spec.ts"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
+  "globals": {
+    "fetch": false,
+    "window": true,
+    "document": true
+  },
+  "settings": {
+  }
+}
