@@ -1,4 +1,4 @@
-# Sportsradar coding exercise.
+# Sportradar coding exercise.
 The aim of this repo is to create simple library for a Live World Cup Score Board.
 
 ## Tech stack
