@@ -22,4 +22,15 @@ describe('Scoreboard implementation', () => {
     expect(matches.length).toBe(1)
     expect(matches[0]).toMatchObject(expectedMatch)
   })
+
+  it('Should finish a match', () => {
+    const scoreboard = new Scoreboard()
+    const match = scoreboard.addMatch('Portugal', 'Spain')
+    expect(match).toBeDefined()
+
+    const removedMatch = scoreboard.finishMatch('Portugal', 'Spain')
+    expect(removedMatch).toMatchObject(match)
+
+    expect(scoreboard.getMatches().length).toBe(0)
+  })
 })
